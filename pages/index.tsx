@@ -1,35 +1,48 @@
 import Head from 'next/head'
+import Layout, { siteTitle } from '../components/layout'
+import utilStyles from '../styles/utils.module.css'
+import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
+import Date from '../components/date'
 
-
-export default function Home() {
+export default function Home({ allPostsData }) {
   return (
-    <div className="container">
+    <Layout home>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{siteTitle}</title>
       </Head>
-
-      <main>
-      <body>
-    <div className="h-64">
-        <div className="p-4 m-4 bg-green-600">
-            <h1 className="text-2xl font-bold text-white">Tailwind CSS Demo</h1>
-        </div>
-        <div className="p-4 m-4 bg-green-300 h-full">
-            <h2 className="text-green-900">Have much fun using Tailwind CSS</h2>
-        </div>  
-    </div>
-    <Link href="/test/123">
-    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">My Tailwind Button</button>
-    </Link>
-</body>
-      </main>
-
-      <footer>
- 
-      </footer>
-
-    </div>
+      <section className={utilStyles.headingMd}>
+        <p>[Your Self Introduction]</p>
+        <p>
+          (This is a sample website - you’ll be building a site like this in{' '}
+          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+        </p>
+      </section>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+              <br />
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
 }
