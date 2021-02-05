@@ -1,6 +1,6 @@
-export default function FomumIdPage()
+export default function FomumIdPage({id})
 {
-    return(<div>Index</div>);
+    return(<div>{id}</div>);
 }
 
 
@@ -8,7 +8,7 @@ export default function FomumIdPage()
 export async function getStaticProps(){
     return {
         props:{
-            id:"test"
+            id:"testparameter"
         }
     }
 }
