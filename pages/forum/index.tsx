@@ -1,6 +1,10 @@
+import RecordAudio from '../../components/RecordAudio';
+
 export default function FomumIdPage({id})
 {
-    return(<div>{id}</div>);
+    return(<div>
+        <RecordAudio />
+    </div>);
 }
 
 
